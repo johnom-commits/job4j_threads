@@ -14,9 +14,7 @@ public class ThreadState {
             printState(first, second);
         }
         printState(first, second);
-        while (second.getState() != Thread.State.TERMINATED) {
-            mainThread.sleep(1);
-        }
+        second.join();
         System.out.println("Работа завершена. Все свободны");
     }
 
