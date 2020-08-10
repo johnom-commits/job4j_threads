@@ -10,11 +10,10 @@ public class ThreadState {
         Thread second = new Thread(() -> {}, "Second thread");
         System.out.println(second.getName()  + ": " + second.getState());
         second.start();
-        while (first.getState() != Thread.State.TERMINATED) {
+        while (first.getState() != Thread.State.TERMINATED && second.getState() != Thread.State.TERMINATED) {
             printState(first, second);
         }
         printState(first, second);
-        second.join();
         System.out.println("Работа завершена. Все свободны");
     }
 
