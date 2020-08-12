@@ -8,20 +8,25 @@ import java.net.URL;
 
 public class Wget {
     private static final int LENGTH_ARGS = 2;
+    private final String[] args;
 
     public static void main(String[] args) throws Exception {
-        Wget wget = new Wget();
-        wget.checkArgs(args);
-        wget.get(args);
+        Wget wget = new Wget(args);
+        wget.checkArgs();
+        wget.get();
     }
 
-    private void checkArgs(String[] args) {
+    public Wget(String[] args) {
+        this.args = args;
+    }
+
+    private void checkArgs() {
         if (args.length < LENGTH_ARGS) {
             throw new IllegalArgumentException("Указаны не все аргументы командной строки");
         }
     }
 
-    public void get(String[] args) throws Exception {
+    public void get() throws Exception {
         InputStream address = new URL(args[0]).openStream();
         long rateLimit = Integer.parseInt(args[1]) * 1024;  // переводим в байты
         try (var in = new BufferedInputStream(address);
