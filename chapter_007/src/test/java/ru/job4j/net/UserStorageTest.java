@@ -22,7 +22,7 @@ public class UserStorageTest {
     }
 
     @Test
-    public void whenTransferBetweenUsers() {
+    public void whenTransferBetweenUsers() throws Exception {
         storage.transfer(1, 2, 330);
         assertEquals(670, user1.getAmount());
         assertEquals(2330, user2.getAmount());
