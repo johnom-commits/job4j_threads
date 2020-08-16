@@ -3,7 +3,7 @@ package ru.job4j.io;
 import java.io.*;
 
 public class ParseFile {
-    private volatile File file;
+    private File file;
 
     public synchronized void setFile(File f) {
         file = f;
@@ -14,31 +14,31 @@ public class ParseFile {
     }
 
     public synchronized String getContent() {
-        String output = "";
+        StringBuilder output = new StringBuilder();
         try (var i = new BufferedInputStream(new FileInputStream(file))) {
             int data;
             while ((data = i.read()) > 0) {
-                output += (char) data;
+                output.append((char) data);
             }
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return output;
+        return output.toString();
     }
 
     public synchronized String getContentWithoutUnicode() {
-        String output = "";
+        StringBuilder output = new StringBuilder();
         try (var i = new BufferedInputStream(new FileInputStream(file))) {
             int data;
             while ((data = i.read()) > 0) {
                 if (data < 0x80) {
-                    output += (char) data;
+                    output.append((char) data);
                 }
             }
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return output;
+        return output.toString();
     }
 
     public synchronized void saveContent(String content) {
