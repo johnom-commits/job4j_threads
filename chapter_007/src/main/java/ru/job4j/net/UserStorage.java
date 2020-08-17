@@ -30,6 +30,9 @@ public final class UserStorage {
 
     public synchronized void transfer(int fromId, int toId, int amount) throws Exception {
         User userFrom = map.get(fromId);
+        if (userFrom == null) {
+            throw new NullPointerException("Передан не существующий идентификатор пользователя.");
+        }
         int amountFrom = userFrom.getAmount();
         if (amountFrom < amount) {
             throw new Exception("Недостаточно суммы на счёте!");
