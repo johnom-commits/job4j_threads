@@ -21,11 +21,10 @@ public class Cache {
         int expected = version.incrementAndGet();
 
         BiFunction<Integer, Base, Base> biFun = (i, m) -> {
-            if (expected == model.getVersion()) {
-                return model;
-            } else {
+            if (expected != model.getVersion()) {
                 throw new OptimisticException("The model is already updated");
             }
+            return model;
         };
         map.computeIfPresent(model.getId(), biFun);
     }
